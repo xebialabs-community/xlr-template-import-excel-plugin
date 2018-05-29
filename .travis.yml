@@ -1,0 +1,12 @@
+language: java
+deploy:
+  provider: releases
+  api_key:
+    secure: fsfTQISp5VhHJ85d2OPtm0NTqUaT4Wi7zTBuZD9Wkhcs1zCbq2widozl6prLxukjfi3Neasg6uc9pa1Bvnx1rhhhDxEs7wjbDbJGK6wCxVxM7SIXxfhlBL/UVsMCDD/oZ0NZZrvTSyfavQSQo8oGeiNbo+f0zEyBZSMtdHhGV9Fh/8WdXNJFIv9M6YbbjoXpKJeBUM074xoYGppgjPnexbS6XgNlgbWlYD0fUBM4N7LJawCXvPwLkkA3+UPrJW/LB4dRFK2wYcPLeTFo7QmphlxFj/s3xFlIfd5MDjXHQEiBK7jN9MtwAg0bOb7V3FzsCWtktfFnl3rYSr6S/MCliD/xM00iuBay6ly/WTnKOkWd3zpaNPwB9BQ470f+a3tX2jokxFdpZfIS2H/rk6Vso7x/3byYltA/TfqE/P7fNgzyI+yF1i/zmrlGOlE3vzqEitqvvXTwwu7Nt1YKxHtayUAohVXvOzNN7lGaIp8VGdTbPvLIVIRgH18LFmmOVU+uO+VjQu2HQK/bBWHSsntdTe2pfs9iyCEvg3QDcvdv5IJK3y+TLcN4dW6L0ae0IiW/hk0LyHlh6CrrM6cjAdp9gnTWwE3Ky8scq9wpWwASTZDqS+M263tYrzTO9/fLBuVeubATjnGBsKNnZ4qHce2kH5YeQaXeuF7adfHk0ylcAfQ=
+  file_glob: true
+  file: build/libs/*
+  skip_cleanup: true
+  on:
+    all_branches: true
+    tags: true
+    repo: xebialabs-community/xlr-template-import-excel-plugin
