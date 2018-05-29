@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="/Users/droberts/products/xl-release-8.0.0-server/lib/jboss-jaxrs-api_2.0_spec-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="/Users/droberts/products/xl-release-8.0.0-server/lib/spring-beans-5.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/Users/droberts/products/xl-release-8.0.0-server/lib/spring-context-5.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="/Users/droberts/products/xl-release-8.0.0-server/lib/jackson-databind-2.9.3.jar"/>
+	<classpathentry kind="lib" path="/Users/droberts/products/xl-release-8.0.0-server/lib/xstream-1.4.9.jar"/>
+	<classpathentry kind="lib" path="/Users/droberts/products/xl-release-8.0.0-server/lib/engine-xml-2018.3.0.jar"/>
+	<classpathentry kind="lib" path="/Users/droberts/products/xl-release-8.0.0-server/lib/xlr-server-8.0.0.jar"/>
+	<classpathentry kind="lib" path="/Users/droberts/products/xl-release-8.0.0-server/lib/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="/Users/droberts/products/xl-release-8.0.0-server/lib/jackson-core-2.9.3.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
