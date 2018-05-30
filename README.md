@@ -1,4 +1,4 @@
-# XL Release Template Import Excel plugin v1.0.1
+# XL Release Template Import Excel plugin
 
 [![Build Status][xlr-template-import-excel-plugin-travis-image]][xlr-template-import-excel-plugin-travis-url]
 [![License: MIT][xlr-template-import-excel-plugin-license-image]][xlr-template-import-excel-plugin-license-url]

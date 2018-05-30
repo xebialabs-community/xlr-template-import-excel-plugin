@@ -15,6 +15,8 @@ from com.xebialabs.xlrelease.domain import Release
 from com.xebialabs.xlrelease.domain import Task
 from com.xebialabs.xlrelease.domain.status import ReleaseStatus
 
+import re
+
 class Template_Import_Excel_Client(object):
 
     columnXref = {}
@@ -29,6 +31,8 @@ class Template_Import_Excel_Client(object):
     phaseApi = None
     taskApi = None
 
+    durationMatcher = None
+
     def __init__(self, workbook, templateName, templateApi, phaseApi, taskApi):
         self.columnXref = {}
         self.currentPhaseTitle = None
@@ -38,6 +42,7 @@ class Template_Import_Excel_Client(object):
         self.templateApi = templateApi
         self.phaseApi = phaseApi
         self.taskApi = taskApi
+        self.durationMatcher = re.compile("(?:([0-9]+)d)? *(?:([0-9]+)h)? *(?:([0-9]+)m)?")
 
     @staticmethod
     def create_client(workbook, templateName, templateApi, phaseApi, taskApi):
@@ -66,11 +71,9 @@ class Template_Import_Excel_Client(object):
             if cell.getRichStringCellValue().getString() == "Description":
                 print "Description in column %d\n" % cell.getColumnIndex()
                 self.columnXref['description'] = cell.getColumnIndex()
-        print self.columnXref
 
     def doPhaseCell(self, cell):
         if cell:
-            print "Evaluating the phase\n"
             phaseTitle = cell.getRichStringCellValue().getString()
             if not self.currentPhaseTitle or phaseTitle != self.currentPhaseTitle:
                 print "Adding a new phase\n"
@@ -85,12 +88,10 @@ class Template_Import_Excel_Client(object):
     def doTaskTypeCell(self, task, cell):
         if cell:
             self.taskApi.changeTaskType(self.currentTask.getId(), cell.getRichStringCellValue().getString())
-            print "Task type set\n"
 
     def doUserCell(self, task, cell):
         if cell:
             self.taskApi.assignTask(self.currentTask.getId(), cell.getRichStringCellValue().getString())
-            print "Task user added\n"
 
     def doTeamCell(self, task, cell):
         if cell:
@@ -99,16 +100,23 @@ class Template_Import_Excel_Client(object):
     def doDescriptionCell(self, task, cell):
         if cell:
             task.description = cell.getRichStringCellValue().getString()
-            print "Task description added\n"
 
     def doDurationCell(self, task, cell):
         if cell:
-            print "To-do:  Add duration to task\n"
+            (days, hours, minutes) = self.durationMatcher.match(cell.getRichStringCellValue().getString()).groups()
+            if days or hours or minutes:
+                plannedDuration = 0
+                if days:
+                    plannedDuration += 60 * 60 * 24 * int(days)
+                if hours:
+                    plannedDuration += 60 * 60 * int(hours)
+                if minutes:
+                    plannedDuration += 60 * int(minutes)
+                task.plannedDuration = plannedDuration
 
     def doTask(self, task):
         self.taskApi.addTask(self.currentPhase.getId(), task)
-        print "Task added to phase\n"
-
+        print "Task %s added to phase\n" % task.title
 
     def doDataRow(self, row):
         self.currentTask = None
@@ -129,20 +137,6 @@ class Template_Import_Excel_Client(object):
         if 'user' in self.columnXref:
             self.doUserCell(self.currentTask, row.getCell(self.columnXref['user']))
 
-#        for cell in row:
-#            print "%s\n" % cell.getRichStringCellValue().getString()
-#            if 'phase' in self.columnXref and cell.getColumnIndex() == self.columnXref['phase']:
-#                print "Evaluating the phase\n"
-#                phaseTitle = cell.getRichStringCellValue().getString()
-#                if not self.currentPhaseTitle or phaseTitle != self.currentPhaseTitle:
-#                    print "Adding a new phase\n"
-#                    self.currentPhase = self.phaseApi.addPhase(self.template.getId(), self.phaseApi.newPhase(phaseTitle))
-#            if 'taskname' in self.columnXref and cell.getColumnIndex() == self.columnXref['taskname']:
-#                task = self.taskApi.newTask("xlrelease.Task")
-#                task.title = cell.getRichStringCellValue().getString()
-#                task = self.taskApi.addTask(self.currentPhase.getId(), task)
-#                print "task added to phase"
-
     def convertWorkbookToTemplate(self):
         print "%s\n" % self.templateName
         sheet = self.workbook.getSheetAt(0)
@@ -154,7 +148,7 @@ class Template_Import_Excel_Client(object):
         self.template = self.templateApi.createTemplate(template)
 
         for row in sheet:
-            print "%d\n" % row.getRowNum()
+            print "Row %d\n" % row.getRowNum()
             if row.getRowNum() == 0:
                 self.doHeaderRow(row)
             else:
