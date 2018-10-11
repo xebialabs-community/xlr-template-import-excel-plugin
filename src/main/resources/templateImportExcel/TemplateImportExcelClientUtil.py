@@ -13,6 +13,6 @@ from templateImportExcel.TemplateImportExcelClient import Template_Import_Excel_
 class Template_Import_Excel_Client_Util(object):
 
     @staticmethod
-    def create_client(workbook, templateName, templateApi, phaseApi, taskApi):
+    def create_client(workbook, targetFolderId, templateName, templateApi, phaseApi, taskApi):
         print "Executing create_client() in Template_Import_Excel_Client_Util class in TemplateImportExcelClientUtil.py\n"
-        return Template_Import_Excel_Client.create_client(workbook, templateName, templateApi, phaseApi, taskApi)
+        return Template_Import_Excel_Client.create_client(workbook, targetFolderId, templateName, templateApi, phaseApi, taskApi)

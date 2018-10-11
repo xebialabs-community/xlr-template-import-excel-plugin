@@ -33,10 +33,11 @@ class Template_Import_Excel_Client(object):
 
     durationMatcher = None
 
-    def __init__(self, workbook, templateName, templateApi, phaseApi, taskApi):
+    def __init__(self, workbook, targetFolderId, templateName, templateApi, phaseApi, taskApi):
         self.columnXref = {}
         self.currentPhaseTitle = None
         self.currentPhase = None
+        self.targetFolderId = targetFolderId
         self.templateName = templateName
         self.workbook = workbook
         self.templateApi = templateApi
@@ -45,8 +46,8 @@ class Template_Import_Excel_Client(object):
         self.durationMatcher = re.compile("(?:([0-9]+)d)? *(?:([0-9]+)h)? *(?:([0-9]+)m)?")
 
     @staticmethod
-    def create_client(workbook, templateName, templateApi, phaseApi, taskApi):
-        return Template_Import_Excel_Client(workbook, templateName, templateApi, phaseApi, taskApi)
+    def create_client(workbook, targetFolderId, templateName, templateApi, phaseApi, taskApi):
+        return Template_Import_Excel_Client(workbook, targetFolderId, templateName, templateApi, phaseApi, taskApi)
 
     def doHeaderRow(self, row):
         for cell in row:
@@ -145,7 +146,7 @@ class Template_Import_Excel_Client(object):
         template.setTitle(self.templateName)
         template.setStatus(ReleaseStatus.TEMPLATE)
         template.setScheduledStartDate(Date())
-        self.template = self.templateApi.createTemplate(template)
+        self.template = self.templateApi.createTemplate(template, self.targetFolderId)
 
         for row in sheet:
             print "Row %d\n" % row.getRowNum()

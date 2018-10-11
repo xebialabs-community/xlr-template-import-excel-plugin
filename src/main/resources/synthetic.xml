@@ -14,6 +14,7 @@
 
 <type type="templateImportExcel.ImportFromAttachments" extends="xlrelease.PythonScript">
   <property name="scriptLocation" hidden="true" default="templateImportExcel/import-task.py" />
+  <property name="targetFolderId" category="input" required="false" />
 </type>
 
 </synthetic>

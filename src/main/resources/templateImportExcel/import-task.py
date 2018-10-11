@@ -18,7 +18,7 @@ for attachment in getCurrentTask().getAttachments():
         workbook = XSSFWorkbook(ByteArrayInputStream(releaseApi.getAttachment(attachment.getId())))
         print "created workbook\n"
         templateName = attachment.getFile().getName().split('.')[-2]
-        client = Template_Import_Excel_Client_Util.create_client(workbook, templateName, templateApi, phaseApi, taskApi)
+        client = Template_Import_Excel_Client_Util.create_client(workbook, targetFolderId, templateName, templateApi, phaseApi, taskApi)
         client.convertWorkbookToTemplate()
     else:
         print "Attachment %s is not a spreadsheet\n" % attachment.getFile().getName()

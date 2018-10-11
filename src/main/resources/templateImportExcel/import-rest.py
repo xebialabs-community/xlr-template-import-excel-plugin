@@ -16,11 +16,11 @@ from templateImportExcel.TemplateImportExcelClientUtil import Template_Import_Ex
 
 logger.info("Executing templateImportExcel/import-rest.py")
 
+targetFolderId = request.entity['data']['targetFolderId']
 templateName = request.entity['data']['templateName']
 workbook = XSSFWorkbook(ByteArrayInputStream(Base64.decodeBase64(request.entity['data']['result'])))
 print "created workbook\n"
-templateName = attachment.getFile().getName().split('.')[-2]
-client = Template_Import_Excel_Client_Util.create_client(workbook, templateName, templateApi, phaseApi, taskApi)
+client = Template_Import_Excel_Client_Util.create_client(workbook, targetFolderId, templateName, templateApi, phaseApi, taskApi)
 client.convertWorkbookToTemplate()
 
 logger.info("Exiting import-rest.py")

@@ -26,7 +26,8 @@ Coding for Team and Duration is not complete, so those columns will be ignored p
 
 ## Requirements
 
-* XL Release 7+
+* XL Release 7.x for verions 1.0.1 or 1.0.2
+* XL Release 8+ for version 1.1.0
 
 ## Installation
 
@@ -37,6 +38,7 @@ Coding for Team and Duration is not complete, so those columns will be ignored p
 
 * The Import-from-Attachments task imports multiple Excel spreadsheet attachments on a task and converts then into templates base on the file name.
 * The plugin can also accept an Excel spreadsheet file via the REST API.
+* Version 1.1.0 (XL Release 8+) offers a targetFolderId property.  If empty, the template will be created in the same folder as the release running the task.
 
 ![[import-from-attachments-task]](images/import-from-attachments-task.png)
 
