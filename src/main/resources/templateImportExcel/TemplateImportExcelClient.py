@@ -1,5 +1,5 @@
 #
-# Copyright 2018 XEBIALABS
+# Copyright 2019 XEBIALABS
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 #
@@ -76,9 +76,10 @@ class Template_Import_Excel_Client(object):
     def doPhaseCell(self, cell):
         if cell:
             phaseTitle = cell.getRichStringCellValue().getString()
-            if not self.currentPhaseTitle or phaseTitle != self.currentPhaseTitle:
+            if not self.currentPhaseTitle or (phaseTitle and phaseTitle != self.currentPhaseTitle):
                 print "Adding a new phase\n"
                 self.currentPhase = self.phaseApi.addPhase(self.template.getId(), self.phaseApi.newPhase(phaseTitle))
+                self.currentPhaseTitle = phaseTitle
 
     def doTaskNameCell(self, cell):
         if cell:
@@ -141,7 +142,6 @@ class Template_Import_Excel_Client(object):
     def convertWorkbookToTemplate(self):
         print "%s\n" % self.templateName
         sheet = self.workbook.getSheetAt(0)
-        # templateJson = {"id" : None, "type" : "xlrelease.Release", "title" : templateName, "phases" : [], "status" : "TEMPLATE"}
         template = Release()
         template.setTitle(self.templateName)
         template.setStatus(ReleaseStatus.TEMPLATE)
